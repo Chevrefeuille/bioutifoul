@@ -34,23 +34,25 @@ def compute_inside_polygon(poly, r):
     return np.array(inside_poly)
 
 
-parser = argparse.ArgumentParser()
-parser.add_argument("-s", "--poly_size", help="size of the polygon", type=int, default=5)
-parser.add_argument("-n", "--iterations", help="number of iterations", type=int, default=10)
-parser.add_argument("-r", "--ratio", help="rotation ratio", type=float, default=0.2)
-args = parser.parse_args()
+def iterate_polygons(start_polygon, iterations, ratio):
+    "Compute the polygons inside a given polygon with a rotation ratio of r"
+    shapes =  [start_polygon]
+    inside = init_poly
+    for i in range(args.iterations):
+        inside = compute_inside_polygon(inside, ratio)
+        shapes += [inside]
+    return shapes
 
 
-c1 = Color("#000000")
-c2 = Color("#33cccc")
-colors = list(c1.range_to(c2, args.iterations + 1))
-
-init_poly = compute_regular_polygon(args.poly_size, 10)
-shapes =  [init_poly]
-
-inside = init_poly
-for i in range(args.iterations):
-    inside = compute_inside_polygon(inside, args.ratio)
-    shapes += [inside]
-
-draw_shapes(shapes, colors)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-s", "--poly_size", help="size of the polygon", type=int, default=5)
+    parser.add_argument("-n", "--iterations", help="number of iterations", type=int, default=10)
+    parser.add_argument("-r", "--ratio", help="rotation ratio", type=float, default=0.2)
+    args = parser.parse_args()
+    init_poly = compute_regular_polygon(args.poly_size, 10)
+    c1 = Color("#000000")
+    c2 = Color("#33cccc")
+    colors = list(c1.range_to(c2, args.iterations + 1))
+    shapes = iterate_polygons(init_poly, args.iterations, args.ratio)
+    draw_shapes(shapes, colors)

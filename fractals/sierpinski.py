@@ -20,7 +20,6 @@ def update(frame, corners):
     return ln,
 
 
-
 corners = [(0, 0), (5, 0), (2.5, 5)]
 
 fig, ax = plt.subplots()

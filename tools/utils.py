@@ -14,11 +14,14 @@ def compute_regular_polygon(n, size):
         poly += [P]
     return np.array(poly)
 
-def draw_shapes(shapes):
+def draw_shapes(shapes, closed=True):
     "Draw the given shape"
     for shape in shapes:
-        x = [c[0] for c in shape] + [shape[0][0]]
-        y = [c[1] for c in shape] + [shape[0][1]]
+        x = [c[0] for c in shape]
+        y = [c[1] for c in shape]
+        if closed:
+            x += [shape[0][0]]
+            y += [shape[0][1]]
         plt.plot(x, y)
         plt.axes().set_aspect('equal', 'datalim')
     plt.show()

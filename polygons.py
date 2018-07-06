@@ -1,28 +1,8 @@
-import matplotlib.pyplot as plt
 import numpy as np
 import math
 import argparse
-from colour import Color
+from tools import utils as ut
 
-def compute_regular_polygon(n, size):
-    "Compute a regular polygon of the given shape"
-    poly = []
-    for k in range(n):
-        x = math.sqrt(size) * math.cos(2 * k * math.pi / n)
-        y = math.sqrt(size) * math.sin(2 * k * math.pi / n)
-        P = [x, y]
-        poly += [P]
-    return np.array(poly)
-
-def draw_shapes(shapes, colors):
-    "Draw the given shape"
-    for i in range(len(shapes)):
-        shape = shapes[i]
-        x = [c[0] for c in shape] + [shape[0][0]]
-        y = [c[1] for c in shape] + [shape[0][1]]
-        plt.plot(x, y, c=colors[i].rgb)
-        plt.axes().set_aspect('equal', 'datalim')
-    plt.show()
 
 def compute_inside_polygon(poly, r):
     "Compute the polygon inside a given polygon with a rotation ratio of r"
@@ -50,9 +30,6 @@ if __name__ == "__main__":
     parser.add_argument("-n", "--iterations", help="number of iterations", type=int, default=10)
     parser.add_argument("-r", "--ratio", help="rotation ratio", type=float, default=0.2)
     args = parser.parse_args()
-    init_poly = compute_regular_polygon(args.poly_size, 10)
-    c1 = Color("#ff0000")
-    c2 = Color("#00ff00")
-    colors = list(c1.range_to(c2, args.iterations + 1))
+    init_poly = ut.compute_regular_polygon(args.poly_size, 10)
     shapes = iterate_polygons(init_poly, args.iterations, args.ratio)
-    draw_shapes(shapes, colors)
+    ut.draw_shapes(shapes)

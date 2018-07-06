@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 from math import *
-import polygons as poly
+from tools import utils as ut
 
 def draw_shape(shape):
     "Draw the given shape"
@@ -41,8 +41,8 @@ def compute_recursively(segment, stop, step):
 
 
 
-shape = poly.compute_regular_polygon(3, 10)
+shape = ut.compute_regular_polygon(3, 10)
 
-fractal = create_fractal(shape, 10)
+fractal = create_fractal(shape, 7)
 
 draw_shape(fractal)
